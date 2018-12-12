@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <title>interactive final game project</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  </head>
+
+<body>
+<!-- 날아다니는 고양이를 표현하는 코딩 -->
+<div id="fly">
+    <img src="nyancat.png" width="150px">
+</div>
+
+<!-- 치즈를 hover할때 쓰이는 코딩 -->
+<div class="hoveringcheese">
+  <a href="#" onmouseenter="playAudio()">
+    <img src="cheese.png"></a>
+    <audio id="audioID">
+    <source src="hello.ogg" type="audio/ogg">
+    <source src="hello.mp3" type="audio/mpeg">
+    </audio>
+    </img>
+</div>
+
+<!-- reset박스 코딩 -->
+<a href="https://jiwoolee23.github.io/finalproject/"><div class="reset">Restart?</div></a>
+</body>
+
+javascript 코딩
+<script>
+var fly = document.getElementById("fly");
+document.addEventListener("mousemove", getMouse);
+
+
+fly.style.position = "absolute"; //css
+var flypos = {x:0, y:0};
+
+setInterval(followMouse, 50);
+
+var mouse = {x:0, y:0}; //mouse.x, mouse.y
+
+var dir = "right";
+function getMouse(e){
+ mouse.x = e.pageX;
+ mouse.y = e.pageY;
+   //Checking directional change
+   if(mouse.x > flypos.x){
+     dir = "right";
+   } else {
+     dir = "left";
+   }
+}
+
+function followMouse(){
+ //1. find distance X , distance Y
+ var distX = mouse.x - flypos.x;
+ var distY = mouse.y - flypos.y;
+ //Easing motion
+  //Progressive reduction of distance
+ flypos.x += distX/5;
+ flypos.y += distY/2;
+
+ fly.style.left = flypos.x + "px";
+ fly.style.top = flypos.y + "px";
+
+
+   //Apply css class
+   if (dir == "right"){
+     fly.setAttribute("class", "right");
+   } else {
+     fly.setAttribute("class", "left");
+   }
+
+}
+
+let x, y
+x = Math.floor(Math.random() * 1200)
+y = Math.floor(Math.random() * 700)
+console.log(x)
+console.log(y)
+$('.hoveringcheese').css({"transform":"translate("+x+"px,"+y+"px)"})
+
+// mp3를 이용한 코딩
+var audio1 = document.getElementById("audioID");
+function playAudio() {
+  audio1.play();
+}
+</script>
+</html>
